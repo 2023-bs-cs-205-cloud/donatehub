@@ -48,12 +48,12 @@ const connectDB = async () => {
     try {
         const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/donatehub';
         console.log('Attempting to connect to MongoDB...');
-        
+
         await mongoose.connect(mongoURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        
+
         console.log('MongoDB connected successfully');
     } catch (error) {
         console.error('MongoDB connection error:', error);
@@ -66,7 +66,7 @@ const connectDB = async () => {
 const startServer = async () => {
     try {
         await connectDB();
-        
+
         const PORT = process.env.PORT || 5000;
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
