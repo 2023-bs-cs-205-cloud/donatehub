@@ -280,7 +280,7 @@ const getNgoCampaigns = async (req, res) => {
                 return {
                     ...campaign.toObject(),
                     donationCount,
-                    totalRaised: totalRaised[0] ? .total || 0
+                    totalRaised: totalRaised[0]?.total || 0
                 };
             })
         );
