@@ -43,22 +43,42 @@ app.use('*', (req, res) => {
     });
 });
 
-// Connect to MongoDB
+// Connect to MongoDB with retry logic
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/donatehub');
+        const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/donatehub';
+        console.log('Attempting to connect to MongoDB...');
+        
+        await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        
         console.log('MongoDB connected successfully');
     } catch (error) {
         console.error('MongoDB connection error:', error);
+        console.log('Retrying connection in 5 seconds...');
+        setTimeout(connectDB, 5000);
+    }
+};
+
+// Start server only after MongoDB connection
+const startServer = async () => {
+    try {
+        await connectDB();
+        
+        const PORT = process.env.PORT || 5000;
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+            console.log(`Health check: http://localhost:${PORT}/api/health`);
+        });
+    } catch (error) {
+        console.error('Failed to start server:', error);
         process.exit(1);
     }
 };
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    connectDB();
-});
+// Start the application
+startServer();
 
 module.exports = app;
