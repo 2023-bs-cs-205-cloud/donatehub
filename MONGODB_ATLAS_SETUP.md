@@ -45,7 +45,7 @@
 Replace the connection string with your credentials:
 
 ```
-mongodb+srv://donatehub-user:YOUR_PASSWORD@donatehub-cluster.xxxxx.mongodb.net/donatehub?retryWrites=true&w=majority
+mongodb+srv://donatehub-user:<db_password>@donatehub-cluster.sn5wavv.mongodb.net/?retryWrites=true&w=majority&appName=donatehub-cluster
 ```
 
 ## 🚀 Step 7: Deploy Backend with Atlas

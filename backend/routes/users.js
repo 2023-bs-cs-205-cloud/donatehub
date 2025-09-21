@@ -36,8 +36,8 @@ const getUserStats = async (req, res) => {
         }]);
 
         const totalUsers = await User.countDocuments();
-        const ngoCount = stats.find(stat => stat._id === 'ngo')?.count || 0;
-        const donorCount = stats.find(stat => stat._id === 'donor')?.count || 0;
+        const ngoCount = stats.find(stat => stat._id === 'ngo') ? .count || 0;
+        const donorCount = stats.find(stat => stat._id === 'donor') ? .count || 0;
 
         res.json({
             totalUsers,
